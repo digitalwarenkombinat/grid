@@ -1,0 +1,20 @@
+{
+  "name": "grid",
+  "version": "1.0.0",
+  "description": "Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost",
+  "license": "ISC",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "@georgedoescode/generative-utils": "^1.0.37",
+    "@parcel/transformer-sass": "^2.4.0",
+    "@svgdotjs/svg.js": "^3.1.2",
+    "gsap": "^3.9.1",
+    "parcel": "^2.4.0",
+    "tinycolor2": "^1.4.2"
+  }
+}
