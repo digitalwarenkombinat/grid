@@ -1,11 +1,6 @@
-import { SVG } from "@svgdotjs/svg.js";
 import { random } from "@georgedoescode/generative-utils";
-import tinycolor from "tinycolor2";
-import gsap from "gsap";
+import { draw, squareSize} from "./app";
 
-console.clear();
-
-let draw, squareSize, numRows, numCols, colors, colorPalette;
 const selectedCharacters = [
   "A",
   "B",
@@ -39,8 +34,7 @@ const selectedCharacters = [
 /*
 Block Design Functions
 */
-
-function drawCircle(x, y, foreground, background) {
+export function drawCircle(x, y, foreground, background) {
   // Create group element
   const group = draw.group().addClass("draw-circle");
 
@@ -58,8 +52,7 @@ function drawCircle(x, y, foreground, background) {
       .move(x + squareSize / 4, y + squareSize / 4);
   }
 }
-
-function drawDots(x, y, foreground, background) {
+export function drawDots(x, y, foreground, background) {
   const group = draw.group().addClass("dots");
 
   const sizeOptions = [2, 3, 4];
@@ -82,8 +75,7 @@ function drawDots(x, y, foreground, background) {
     }
   }
 }
-
-function drawCross(x, y, foreground, background) {
+export function drawCross(x, y, foreground, background) {
   const group = draw.group().addClass("draw-cross");
   const crossGroup = draw.group();
   // Draw Background
@@ -105,8 +97,7 @@ function drawCross(x, y, foreground, background) {
     crossGroup.transform({ rotate: 45, origin: "center center" });
   }
 }
-
-function drawOppositeCircles(x, y, foreground, background) {
+export function drawOppositeCircles(x, y, foreground, background) {
   const group = draw.group().addClass("opposite-circles");
   const circleGroup = draw.group();
 
@@ -120,7 +111,6 @@ function drawOppositeCircles(x, y, foreground, background) {
     [0, squareSize, squareSize, 0]
   ]);
   // Draw Foreground
-
   circleGroup
     .circle(squareSize)
     .fill(foreground)
@@ -134,8 +124,7 @@ function drawOppositeCircles(x, y, foreground, background) {
   circleGroup.maskWith(mask);
   group.add(circleGroup);
 }
-
-function drawQuarterCircle(x, y, foreground, background) {
+export function drawQuarterCircle(x, y, foreground, background) {
   const group = draw.group().addClass("quarter-circle");
   const circleGroup = draw.group();
 
@@ -162,15 +151,13 @@ function drawQuarterCircle(x, y, foreground, background) {
   circleGroup.maskWith(mask);
   group.add(circleGroup);
 }
-
-function drawDiagonalSquare(x, y, foreground, background) {
+export function drawDiagonalSquare(x, y, foreground, background) {
   const group = draw.group().addClass("diagonal-square");
 
   // Draw Background
   group.rect(squareSize, squareSize).fill(background).move(x, y);
 
   // Draw Foreground
-
   let polygon;
   if (Math.random() > 0.5) {
     polygon = group.polygon(
@@ -184,8 +171,7 @@ function drawDiagonalSquare(x, y, foreground, background) {
 
   polygon.fill(foreground);
 }
-
-function drawLetterBlock(x, y, foreground, background) {
+export function drawLetterBlock(x, y, foreground, background) {
   const group = draw.group().addClass("half-square");
   const mask = draw.rect(squareSize, squareSize).fill("#fff").move(x, y);
 
@@ -194,7 +180,7 @@ function drawLetterBlock(x, y, foreground, background) {
 
   // Draw Foreground
   // const character = random(selectedCharacters);
-  const character = selectedCharacters.splice(Math.floor(Math.random()), 1)
+  const character = selectedCharacters.splice(Math.floor(Math.random()), 1);
   const text = group.plain(character);
   text.font({
     family: "Source Code Pro",
@@ -208,8 +194,7 @@ function drawLetterBlock(x, y, foreground, background) {
   text.rotate(random([0, 90, 180, 270]));
   group.maskWith(mask);
 }
-
-function drawHalfSquare(x, y, foreground, background) {
+export function drawHalfSquare(x, y, foreground, background) {
   const group = draw.group().addClass("half-square");
 
   let halfX = 2;
@@ -229,156 +214,3 @@ function drawHalfSquare(x, y, foreground, background) {
     .fill(foreground)
     .move(x, y);
 }
-
-/*
-Create New Piece
-*/
-
-function generateNewGrid() {
-  // Fade out SVG
-  gsap.to(".container > svg", {
-    opacity: 0,
-    scale: 0.8,
-    duration: 0.25,
-    onComplete: () => {
-      // Remove previous SVG from DOM
-      document.querySelector(".container").innerHTML = "";
-      // Start new SVG creation
-      drawGrid();
-    }
-  });
-}
-
-async function drawGrid() {
-  // Set Random Palette
-  colorPalette = random(colors);
-
-  // Set background color
-  const bg = tinycolor
-    .mix(colorPalette[0], colorPalette[1], 50)
-    .desaturate(10)
-    .toString();
-
-  // Make Lighter version
-  const bgInner = tinycolor(bg).lighten(10).toString();
-  // And darker version
-  const bgOuter = tinycolor(bg).darken(10).toString();
-
-  // Set to CSS Custom Properties
-  gsap.to(".container", {
-    "--bg-inner": bgInner,
-    "--bg-outer": bgOuter,
-    duration: 0.5
-  });
-
-  // Set Variables
-  squareSize = 100;
-  numRows = random(4, 8, true);
-  numCols = random(4, 8, true);
-
-  // Create parent SVG
-  draw = SVG()
-    .addTo(".container")
-    .size("100%", "100%")
-    .viewbox(`0 0 ${numRows * squareSize} ${numCols * squareSize}`)
-    .opacity(0);
-
-  // Create Grid
-  for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
-      generateLittleBlock(i, j);
-    }
-  }
-
-  generateBigBlock();
-
-  gsap.fromTo(
-    ".container > svg",
-    { opacity: 0, scale: 0.8 },
-    { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
-  );
-}
-
-/*
-Utility Functions
-*/
-
-function generateLittleBlock(i, j) {
-  const { foreground, background } = getTwoColors(colorPalette);
-
-  const blockStyleOptions = [
-    drawCross,
-    drawDots,
-    drawHalfSquare,
-    drawDiagonalSquare,
-    drawCircle,
-    drawOppositeCircles,
-    drawQuarterCircle,
-    drawLetterBlock
-  ];
-
-  const blockStyle = random(blockStyleOptions);
-  const xPos = i * squareSize;
-  const yPos = j * squareSize;
-
-  blockStyle(xPos, yPos, foreground, background);
-}
-
-function generateBigBlock() {
-  const { foreground, background } = getTwoColors(colorPalette);
-
-  const blockStyleOptions = [
-    drawCross,
-    drawHalfSquare,
-    drawDiagonalSquare,
-    drawCircle,
-    drawQuarterCircle,
-    drawOppositeCircles,
-    drawLetterBlock
-  ];
-
-  let prevSquareSize = squareSize;
-
-  // Random multiplier (2 or 3 squares)
-  const multiplier = random([2, 3]);
-  // Random X position
-  const xPos = random(0, numRows - multiplier, true) * prevSquareSize;
-  // Random Y position
-  const yPos = random(0, numCols - multiplier, true) * prevSquareSize;
-
-  // Make squareSize bigger
-  squareSize = multiplier * 100;
-
-  // Get random square style
-  const blockStyle = random(blockStyleOptions);
-  blockStyle(xPos, yPos, foreground, background);
-
-  // Reset squareSize
-  squareSize = prevSquareSize;
-}
-
-function getTwoColors(colors) {
-  let colorList = [...colors];
-  // Get random index for this array of colors
-  const colorIndex = random(0, colorList.length - 1, true);
-  // Set the background to the color at that array
-  const background = colorList[colorIndex];
-  // Remove that color from the options
-  colorList.splice(colorIndex, 1);
-  // Set the foreground to any other color in the array
-  const foreground = random(colorList);
-
-  return { foreground, background };
-}
-
-async function init() {
-  // Get color palettes
-  colors = await fetch(
-    "https://unpkg.com/nice-color-palettes@3.0.0/100.json"
-  ).then((response) => response.json());
-
-  generateNewGrid();
-  document.querySelector(".button").addEventListener("click", generateNewGrid);
-}
-
-init();

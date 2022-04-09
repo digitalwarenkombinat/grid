@@ -1,6 +1,7 @@
 :root {
   --bg-inner: white;
   --bg-outer: white;
+  --bg-button: #1fb264;
 }
 
 * {
@@ -9,11 +10,75 @@
 
 body {
   position: relative;
+  margin: 0;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr minmax(150px, 20%);
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+
+  .dropzone {
+    padding: 2rem;
+    margin: 2rem;
+    border: 0.2rem dashed var(--bg-button);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    transition: 0.25s background-color ease-in-out;
+    cursor: pointer;
+
+    &-dragging,
+    &:hover {
+      background-color: lighten(#1fb264, 28%);
+    }
+
+    &-icon {
+      max-width: 75px;
+      display: block;
+      margin: 0 auto 1.5rem;
+    }
+
+    &-input {
+      display: none;
+    }
+  }
+
+  .button {
+    display: inline-flex;
+    border: 2px solid var(--bg-button);
+    margin: 20px;
+    padding: 1rem;
+    color: var(--bg-button);
+    text-transform: uppercase;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    a {
+      color: var(--bg-button);
+      text-decoration: none;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    &:hover {
+      background-color: lighten(#1fb264, 28%);
+    }
+  }
 }
 
 .container {
   height: 100vh;
-  width: 100vw;
   padding: 1rem;
   background-image: radial-gradient(var(--bg-inner) 0%, var(--bg-outer) 100%);
 
@@ -23,44 +88,6 @@ body {
   }
 
   svg * {
-    /* Removes little gaps between the shapes */
     shape-rendering: crispEdges;
-  }
-}
-
-.button {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 0.5rem;
-  margin: 0;
-  border-top-left-radius: 12px;
-  background: #ffffffcc;
-  border: 0.5px solid #555555cc;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.75rem;
-
-  svg {
-    width: 1.25rem;
-    transition: 0.3s ease-in-out transform;
-  }
-
-  &:hover svg {
-    transform: rotate(-45deg);
-  }
-
-  &:focus,
-  &:active {
-    outline: 2px solid #f06;
-    svg {
-      transform: rotate(-90deg);
-    }
   }
 }
