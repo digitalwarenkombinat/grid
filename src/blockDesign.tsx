@@ -1,5 +1,5 @@
 import { random } from "@georgedoescode/generative-utils";
-import { draw, squareSize} from "./index";
+import { draw, squareSize} from "../pages/index";
 
 const selectedCharacters = [
   "A",
@@ -34,7 +34,7 @@ const selectedCharacters = [
 /*
 Block Design Functions
 */
-export function drawCircle(x, y, foreground, background) {
+export function drawCircle(x: number, y: number, foreground: string, background: string) {
   // Create group element
   const group = draw.group().addClass("draw-circle");
 
@@ -52,7 +52,7 @@ export function drawCircle(x, y, foreground, background) {
       .move(x + squareSize / 4, y + squareSize / 4);
   }
 }
-export function drawDots(x, y, foreground, background) {
+export function drawDots(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("dots");
 
   const sizeOptions = [2, 3, 4];
@@ -75,7 +75,7 @@ export function drawDots(x, y, foreground, background) {
     }
   }
 }
-export function drawCross(x, y, foreground, background) {
+export function drawCross(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("draw-cross");
   const crossGroup = draw.group();
   // Draw Background
@@ -97,7 +97,7 @@ export function drawCross(x, y, foreground, background) {
     crossGroup.transform({ rotate: 45, origin: "center center" });
   }
 }
-export function drawOppositeCircles(x, y, foreground, background) {
+export function drawOppositeCircles(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("opposite-circles");
   const circleGroup = draw.group();
 
@@ -124,7 +124,7 @@ export function drawOppositeCircles(x, y, foreground, background) {
   circleGroup.maskWith(mask);
   group.add(circleGroup);
 }
-export function drawQuarterCircle(x, y, foreground, background) {
+export function drawQuarterCircle(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("quarter-circle");
   const circleGroup = draw.group();
 
@@ -151,7 +151,7 @@ export function drawQuarterCircle(x, y, foreground, background) {
   circleGroup.maskWith(mask);
   group.add(circleGroup);
 }
-export function drawDiagonalSquare(x, y, foreground, background) {
+export function drawDiagonalSquare(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("diagonal-square");
 
   // Draw Background
@@ -171,7 +171,7 @@ export function drawDiagonalSquare(x, y, foreground, background) {
 
   polygon.fill(foreground);
 }
-export function drawLetterBlock(x, y, foreground, background) {
+export function drawLetterBlock(x: number, y: number, foreground: any, background: string) {
   const group = draw.group().addClass("half-square");
   const mask = draw.rect(squareSize, squareSize).fill("#fff").move(x, y);
 
@@ -194,7 +194,7 @@ export function drawLetterBlock(x, y, foreground, background) {
   text.rotate(random([0, 90, 180, 270]));
   group.maskWith(mask);
 }
-export function drawHalfSquare(x, y, foreground, background) {
+export function drawHalfSquare(x: number, y: number, foreground: string, background: string) {
   const group = draw.group().addClass("half-square");
 
   let halfX = 2;

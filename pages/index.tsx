@@ -4,7 +4,7 @@ import { Svg, SVG } from "@svgdotjs/svg.js";
 import { random } from "@georgedoescode/generative-utils";
 import tinycolor from "tinycolor2";
 import gsap from "gsap";
-import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "./blockDesign";
+import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "../src/blockDesign";
 
 export let draw: Svg, squareSize: number, numRows: number, numCols: number, colors: any, colorPalette: any[];
 
