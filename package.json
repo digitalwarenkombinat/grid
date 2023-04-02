@@ -2,19 +2,28 @@
   "name": "grid",
   "version": "1.0.0",
   "description": "Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost",
-  "license": "ISC",
-  "source": "src/index.html",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel",
-    "build": "parcel build"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@georgedoescode/generative-utils": "^1.0.38",
-    "@parcel/transformer-sass": "^2.4.1",
     "@svgdotjs/svg.js": "^3.1.2",
-    "gsap": "^3.10.2",
-    "parcel": "^2.4.1",
-    "tinycolor2": "^1.4.2"
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.32",
+    "@types/react-dom": "18.0.11",
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.2.4",
+    "gsap": "^3.11.5",
+    "sass": "^1.60.0",
+    "tinycolor2": "^1.6.0",
+    "typescript": "5.0.3"
   }
 }
