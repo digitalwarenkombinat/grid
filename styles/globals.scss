@@ -1,0 +1,50 @@
+:root {
+  --bg-inner: white;
+  --bg-outer: white;
+  --bg-button: #1fb264;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  width: 80vw;
+}
+
+.button {
+  display: inline-flex;
+  border: 2px solid var(--bg-button);
+  padding: 1rem;
+  color: var(--bg-button);
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: lighten(#1fb264, 28%);
+  }
+}
+
+.container {
+  height: 100vh;
+  background-image: radial-gradient(var(--bg-inner) 0%, var(--bg-outer) 100%);
+
+  svg {
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  svg * {
+    // shape-rendering: crispEdges;
+    shape-rendering: geometricprecision;
+  }
+}
