@@ -1,11 +1,12 @@
-import { SVG } from "@svgdotjs/svg.js";
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import { Svg, SVG } from "@svgdotjs/svg.js";
 import { random } from "@georgedoescode/generative-utils";
 import tinycolor from "tinycolor2";
 import gsap from "gsap";
 import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "./blockDesign";
-import { downloadSVG } from "./downloadSVG";
 
-export let draw, squareSize, numRows, numCols, colors, colorPalette;
+export let draw: Svg, squareSize: number, numRows: number, numCols: number, colors: any, colorPalette: any[];
 
 /*
 Create New Piece
@@ -19,7 +20,10 @@ function generateNewGrid() {
     duration: 0.25,
     onComplete: () => {
       // Remove previous SVG from DOM
-      document.querySelector(".container").innerHTML = "";
+      let container = document.querySelector(".container")
+      if (container){ 
+        container.innerHTML = "";
+      }
       // Start new SVG creation
       drawGrid();
     }
@@ -27,9 +31,14 @@ function generateNewGrid() {
 }
 
 async function drawGrid() {
+  // Get color palettes
+  const response = await fetch('https://unpkg.com/nice-color-palettes@3.0.0/100.json');
+  const colors = await response.json();
+
   // Set Random Palette
   colorPalette = random(colors);
-
+  // colorPalette = ['#dd8d0e', '#009599', '#33006c', '#ffffff'];
+  
   // Set background color
   const bg = tinycolor
     .mix(colorPalette[0], colorPalette[1], 50)
@@ -52,6 +61,8 @@ async function drawGrid() {
   squareSize = 100;
   numRows = random(4, 8, true);
   numCols = random(4, 8, true);
+  // numRows = 6;
+  // numCols = 4;
 
   // Create parent SVG
   draw = SVG()
@@ -80,7 +91,7 @@ async function drawGrid() {
 Utility Functions
 */
 
-function generateLittleBlock(i, j) {
+function generateLittleBlock(i: number, j: number) {
   const { foreground, background } = getTwoColors(colorPalette);
 
   const blockStyleOptions = [
@@ -134,7 +145,7 @@ function generateBigBlock() {
   squareSize = prevSquareSize;
 }
 
-function getTwoColors(colors) {
+function getTwoColors(colors: any) {
   let colorList = [...colors];
   // Get random index for this array of colors
   const colorIndex = random(0, colorList.length - 1, true);
@@ -148,15 +159,21 @@ function getTwoColors(colors) {
   return { foreground, background };
 }
 
-async function init() {
-  // Get color palettes
-  colors = await fetch(
-    "https://unpkg.com/nice-color-palettes@3.0.0/100.json"
-  ).then((response) => response.json());
-
-  generateNewGrid();
-  document.querySelector("#regenerate").addEventListener("click", generateNewGrid);
-  document.querySelector("#download").addEventListener("click", downloadSVG);
+const Home: NextPage = () => {
+  drawGrid()
+  return (
+    <div className="wrapper">
+      <Head>
+        <title>Creating Generative SVG Grids</title>
+        <meta name="description" content="Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
+      <h1>Creating Generative SVG Grids</h1>
+      <button className="button" onClick={generateNewGrid}>Regenerate</button>
+      <div className="container"/>
+    </div>
+  )
 }
 
-init();
+export default Home
