@@ -5,93 +5,22 @@ import { random } from "@georgedoescode/generative-utils";
 import tinycolor from "tinycolor2";
 import gsap from "gsap";
 import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "../src/blockDesign";
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Stack from '@mui/material/Stack';
+import Chip from '@mui/material/Chip';
 
-export let draw: Svg, squareSize: number, numRows: number, numCols: number, colors: any, colorPalette: any[];
-
-/*
-Create New Piece
-*/
-
-function generateNewGrid() {
-  // Fade out SVG
-  gsap.to(".container > svg", {
-    opacity: 0,
-    scale: 0.8,
-    duration: 0.25,
-    onComplete: () => {
-      // Remove previous SVG from DOM
-      let container = document.querySelector(".container")
-      if (container){ 
-        container.innerHTML = "";
-      }
-      // Start new SVG creation
-      drawGrid();
-    }
-  });
-}
-
-async function drawGrid() {
-  // Get color palettes
-  const response = await fetch('https://unpkg.com/nice-color-palettes@3.0.0/100.json');
-  const colors = await response.json();
-
-  // Set Random Palette
-  colorPalette = random(colors);
-  // colorPalette = ['#dd8d0e', '#009599', '#33006c', '#ffffff'];
-  
-  // Set background color
-  const bg = tinycolor
-    .mix(colorPalette[0], colorPalette[1], 50)
-    .desaturate(10)
-    .toString();
-
-  // Make Lighter version
-  const bgInner = tinycolor(bg).lighten(10).toString();
-  // And darker version
-  const bgOuter = tinycolor(bg).darken(10).toString();
-
-  // Set to CSS Custom Properties
-  gsap.to(".container", {
-    "--bg-inner": bgInner,
-    "--bg-outer": bgOuter,
-    duration: 0.5
-  });
-
-  // Set Variables
-  squareSize = 100;
-  numRows = random(4, 8, true);
-  numCols = random(4, 8, true);
-  // numRows = 6;
-  // numCols = 4;
-
-  // Create parent SVG
-  draw = SVG()
-    .addTo(".container")
-    .size("100%", "100%")
-    .viewbox(`0 0 ${numRows * squareSize} ${numCols * squareSize}`)
-    .opacity(0);
-
-  // Create Grid
-  for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
-      generateLittleBlock(i, j);
-    }
-  }
-
-  generateBigBlock();
-
-  gsap.fromTo(
-    ".container > svg",
-    { opacity: 0, scale: 0.8 },
-    { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
-  );
-}
+export let draw: Svg, squareSize: number, numRows: number, numCols: number, colors: string[], colorPalette: string[];
 
 /*
 Utility Functions
 */
 
-function generateLittleBlock(i: number, j: number) {
+function generateLittleBlock(i: number, j: number, diwakoStyle: boolean) {
   const { foreground, background } = getTwoColors(colorPalette);
 
   const blockStyleOptions = [
@@ -109,10 +38,10 @@ function generateLittleBlock(i: number, j: number) {
   const xPos = i * squareSize;
   const yPos = j * squareSize;
 
-  blockStyle(xPos, yPos, foreground, background);
+  blockStyle(xPos, yPos, foreground, background, diwakoStyle);
 }
 
-function generateBigBlock() {
+function generateBigBlock(diwakoStyle: boolean) {
   const { foreground, background } = getTwoColors(colorPalette);
 
   const blockStyleOptions = [
@@ -139,13 +68,13 @@ function generateBigBlock() {
 
   // Get random square style
   const blockStyle = random(blockStyleOptions);
-  blockStyle(xPos, yPos, foreground, background);
+  blockStyle(xPos, yPos, foreground, background, diwakoStyle);
 
   // Reset squareSize
   squareSize = prevSquareSize;
 }
 
-function getTwoColors(colors: any) {
+function getTwoColors(colors: string[]) {
   let colorList = [...colors];
   // Get random index for this array of colors
   const colorIndex = random(0, colorList.length - 1, true);
@@ -160,17 +89,113 @@ function getTwoColors(colors: any) {
 }
 
 const Home: NextPage = () => {
-  drawGrid()
+
+  const [colors, setColors] = useState([''])
+  const [diwakoStyle, setDiwakoStyle] = useState(false)
+  const [init, setInit] = useState(false)
+
+  /*
+  Create New Piece
+  */
+
+  function generateNewGrid() {
+    setInit(true);
+    // Fade out SVG
+    gsap.to(".container > svg", {
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.25,
+      onComplete: () => {
+        // Remove previous SVG from DOM
+        let container = document.querySelector(".container")
+        if (container){ 
+          container.innerHTML = "";
+        }
+        // Start new SVG creation
+        drawGrid();
+      }
+    });
+  }
+
+  async function drawGrid() {
+    // Get color palettes
+    const response = await fetch('https://unpkg.com/nice-color-palettes@3.0.0/100.json');
+    const colors = await response.json();
+  
+    // Set Random Palette
+    colorPalette = diwakoStyle ? ['#dd8d0e', '#009599', '#33006c', '#ffffff'] : random(colors);
+    setColors(colorPalette)
+    
+    // Set background color
+    const bg = tinycolor
+      .mix(colorPalette[0], colorPalette[1], 50)
+      .desaturate(10)
+      .toString();
+  
+    // Make Lighter version
+    const bgInner = tinycolor(bg).lighten(10).toString();
+    // And darker version
+    const bgOuter = tinycolor(bg).darken(10).toString();
+  
+    // Set to CSS Custom Properties
+    gsap.to(".container", {
+      "--bg-inner": bgInner,
+      "--bg-outer": bgOuter,
+      duration: 0.5
+    });
+  
+    // Set Variables
+    squareSize = 100;
+    numRows = random(4, 8, true);
+    numCols = random(4, 8, true);
+    // numRows = 6;
+    // numCols = 4;
+  
+    // Create parent SVG
+    draw = SVG()
+      .addTo(".container")
+      .size("100%", "100%")
+      .viewbox(`0 0 ${numRows * squareSize} ${numCols * squareSize}`)
+      .opacity(0);
+  
+    // Create Grid
+    for (let i = 0; i < numRows; i++) {
+      for (let j = 0; j < numCols; j++) {
+        generateLittleBlock(i, j, diwakoStyle);
+      }
+    }
+  
+    generateBigBlock(diwakoStyle);
+  
+    gsap.fromTo(
+      ".container > svg",
+      { opacity: 0, scale: 0.8 },
+      { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
+    );
+  }
+
   return (
     <div className="wrapper">
       <Head>
         <title>Creating Generative SVG Grids</title>
         <meta name="description" content="Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-      
-      <h1>Creating Generative SVG Grids</h1>
-      <button className="button" onClick={generateNewGrid}>Regenerate</button>
+      </Head>      
+      <Typography variant="h2" component="h1">SVG Grids</Typography>
+      <Button variant="contained" color="secondary" onClick={generateNewGrid}>Regenerate</Button>
+      {init && <>
+        <Stack direction="row" spacing={1}>
+          {colors.map((color, index) => (
+            <Chip key={index} label={color} sx={{backgroundColor: color, color: (theme) => theme.palette.getContrastText(color||'#fff')}}/>
+          ))}
+        </Stack>
+        <FormGroup>
+          <FormControlLabel control={<Switch color="warning" checked={diwakoStyle}
+            onChange={() => setDiwakoStyle(!diwakoStyle)}
+            inputProps={{ 'aria-label': 'controlled' }}/>} label="Set Digitalwarenkombinat style" />
+        </FormGroup>
+      </>}
+
       <div className="container"/>
     </div>
   )

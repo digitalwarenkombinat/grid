@@ -171,7 +171,7 @@ export function drawDiagonalSquare(x: number, y: number, foreground: string, bac
 
   polygon.fill(foreground);
 }
-export function drawLetterBlock(x: number, y: number, foreground: any, background: string) {
+export function drawLetterBlock(x: number, y: number, foreground: string, background: string, diwakoStyle: boolean) {
   const group = draw.group().addClass("half-square");
   const mask = draw.rect(squareSize, squareSize).fill("#fff").move(x, y);
 
@@ -179,7 +179,7 @@ export function drawLetterBlock(x: number, y: number, foreground: any, backgroun
   group.rect(squareSize, squareSize).fill(background).move(x, y);
 
   // Draw Foreground
-  const character = random(selectedCharacters);
+  const character = diwakoStyle ? random(["D", "I", "W", "A", "K", "O"]): random(selectedCharacters);
   //const character = selectedCharacters.splice(Math.floor(Math.random()), 1);
   const text = group.plain(character);
   text.font({
