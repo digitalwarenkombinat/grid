@@ -26,11 +26,11 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   place-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .container {
-  height: 75vh;
+  height: 70vh;
   background-image: radial-gradient(var(--bg-inner) 0%, var(--bg-outer) 100%);
 
   svg {

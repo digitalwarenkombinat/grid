@@ -1,18 +1,24 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { Svg, SVG } from "@svgdotjs/svg.js";
+/* eslint-disable @next/next/no-img-element */
 import { random } from "@georgedoescode/generative-utils";
-import tinycolor from "tinycolor2";
-import gsap from "gsap";
-import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "../src/blockDesign";
+import { Svg, SVG } from "@svgdotjs/svg.js";
 import { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import gsap from "gsap";
+import Head from 'next/head'
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import tinycolor from "tinycolor2";
+import Toolbar from '@mui/material/Toolbar';
+import type { NextPage } from 'next'
+import Typography from '@mui/material/Typography';
+
+import { drawCross, drawDots, drawHalfSquare, drawDiagonalSquare, drawCircle, drawOppositeCircles, drawQuarterCircle, drawLetterBlock } from "../src/blockDesign";
+
 
 export let draw: Svg, squareSize: number, numRows: number, numCols: number, colors: string[], colorPalette: string[];
 
@@ -148,8 +154,6 @@ const Home: NextPage = () => {
     squareSize = 100;
     numRows = random(4, 8, true);
     numCols = random(4, 8, true);
-    // numRows = 6;
-    // numCols = 4;
   
     // Create parent SVG
     draw = SVG()
@@ -180,23 +184,49 @@ const Home: NextPage = () => {
         <title>Creating Generative SVG Grids</title>
         <meta name="description" content="Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>      
-      <Typography variant="h2" component="h1">SVG Grids</Typography>
-      <Button variant="contained" color="secondary" onClick={generateNewGrid}>Regenerate</Button>
-      {init && <>
-        <Stack direction="row" spacing={1}>
+      </Head>
+      <AppBar position="static" sx={{backgroundColor: '#dd8d0e'}}>
+        <Toolbar>
+          <Typography>
+            <img
+              src="./icon.svg"
+              alt={'Logo Digitalwarenkombinat!'}
+              width={300}
+              style={{
+                width: '20vw',
+                height: 'auto',
+                maxHeight: '100px',
+              }}
+            />
+          </Typography>
+          <Typography variant="h2" component="h1" color="white" sx={{flexGrow: 1, ml: 4}}>SVG Grid</Typography>
+        </Toolbar>
+      </AppBar>
+      <Button variant="contained" size="large" sx={{color: '#fff', backgroundColor: '#dd8d0e'}} onClick={generateNewGrid}>Generate your own grid</Button>
+      {init ? <><Container sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
+        <Stack direction="row" spacing={1} sx={{justifyContent: 'center'}}>
           {colors.map((color, index) => (
             <Chip key={index} label={color} sx={{backgroundColor: color, color: (theme) => theme.palette.getContrastText(color||'#fff')}}/>
           ))}
         </Stack>
-        <FormGroup>
+        <FormGroup sx={{alignItems: 'center'}}>
           <FormControlLabel control={<Switch color="warning" checked={diwakoStyle}
             onChange={() => setDiwakoStyle(!diwakoStyle)}
             inputProps={{ 'aria-label': 'controlled' }}/>} label="Set Digitalwarenkombinat style" />
         </FormGroup>
-      </>}
-
-      <div className="container"/>
+        </Container>
+        <div className="container"/>
+       </> :
+      <img
+        src="./about.svg"
+        alt={'Logo Digitalwarenkombinat'}
+        style={{
+          width: '100vw',
+          height: 'auto',
+          maxHeight: '800px'
+        }}
+      />
+      }      
     </div>
   )
 }
