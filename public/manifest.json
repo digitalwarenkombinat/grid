@@ -1,0 +1,14 @@
+{
+  "short_name": "SVG Grids",
+  "name": "Creating Generative SVG Grids",
+  "theme_color": "#dd8d0e",
+  "background_color": "#33006c",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    { "src": "./icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "./icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
