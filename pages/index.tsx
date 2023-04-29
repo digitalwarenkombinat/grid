@@ -183,7 +183,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Creating Generative SVG Grids</title>
         <meta name="description" content="Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="./favicon.ico" />
       </Head>
       <AppBar position="static" sx={{backgroundColor: '#dd8d0e'}}>
         <Toolbar>
