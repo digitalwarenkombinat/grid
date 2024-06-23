@@ -10,25 +10,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.11.16",
-    "next": "13.2.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.20",
+    "next": "14.2.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@georgedoescode/generative-utils": "^1.0.38",
-    "@svgdotjs/svg.js": "^3.1.2",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.32",
-    "@types/react-dom": "18.0.11",
-    "@types/tinycolor2": "^1.4.3",
-    "eslint": "8.37.0",
-    "eslint-config-next": "13.2.4",
-    "gsap": "^3.11.5",
-    "sass": "^1.60.0",
+    "@georgedoescode/generative-utils": "^2.0.1",
+    "@svgdotjs/svg.js": "^3.2.3",
+    "@types/node": "20.14.8",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@types/tinycolor2": "^1.4.6",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.2.4",
+    "gsap": "^3.12.5",
+    "sass": "^1.77.6",
     "tinycolor2": "^1.6.0",
-    "typescript": "5.0.3"
+    "typescript": "5.5.2"
   }
 }
