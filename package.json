@@ -1,7 +1,7 @@
 {
   "name": "grid-art-designer",
   "version": "1.0.0",
-  "description": "Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost",
+  "description": "A web-based generative art tool that creates customizable SVG grids with random designs and color palettes. Download your creations in both SVG and PNG formats.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

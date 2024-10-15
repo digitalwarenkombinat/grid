@@ -28,6 +28,7 @@ import {
   drawQuarterCircle,
   drawLetterBlock,
 } from "../src/blockDesign";
+import Link from '@mui/material/Link';
 
 // Define variables with strict types
 export let draw: Svg;
@@ -221,103 +222,128 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div>
       <Head>
         <title>Grid Art Designer</title>
-        <meta
-          name="description"
-          content="Inspired from [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/) by Alex Trost"
-        />
+        <meta name="description" content="Create stunning generative SVG grids with customizable designs and color palettes. Download your creations in SVG and PNG formats. Perfect for digital art, prints, and web design. Start creating with just one click!"></meta>
         <link rel="icon" href="./favicon.ico" />
         <link rel="manifest" href="./manifest.json" />
       </Head>
       <AppBar position="static" sx={{ backgroundColor: "#dd8d0e" }}>
         <Toolbar>
-          <Typography>
-            <img
-              src="./icon.svg"
-              alt={"Logo Digitalwarenkombinat!"}
-              width={300}
-              style={{
-                width: "20vw",
-                height: "auto",
-                maxHeight: "100px",
-              }}
-            />
-          </Typography>
+          <Link href="https://digitalwarenkombinat.de/">
+            <Typography>
+              <img
+                src="./icon.svg"
+                alt={"Logo Digitalwarenkombinat!"}
+                width={300}
+                style={{
+                  width: "20vw",
+                  height: "auto",
+                  maxHeight: "100px",
+                }}
+              />
+            </Typography>
+          </Link>
           <Typography
-            variant="h2"
+            variant="h5"
             component="h1"
             color="white"
-            sx={{ flexGrow: 1, ml: 4 }}
+            sx={{ flexGrow: 1, ml: 2, fontSize: { xs: "1.5rem", md: "2rem" } }}
           >
             Grid Art Designer
           </Typography>
         </Toolbar>
       </AppBar>
-      <Button
-        variant="contained"
-        size="large"
-        sx={{ color: "#fff", backgroundColor: "#dd8d0e" }}
-        onClick={generateNewGrid}
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" }, 
+          alignItems: "center",
+          justifyContent: "center",
+          py: 4,
+          gap: 2
+        }}
       >
-        Generate your own grid
-      </Button>
-      {init ? (
-        <>
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-evenly",
-            }}
+        <Typography
+            variant="h5"
+            component="h1"
+            sx={{ flexGrow: 1, textAlign: 'center', fontSize: { xs: "1.5rem", md: "2rem" } }}
           >
-            <Stack direction="row" spacing={1} sx={{ justifyContent: "center" }}>
-              {colors.map((color, index) => (
-                <Chip
-                  key={index}
-                  label={color}
-                  sx={{
-                    backgroundColor: color,
-                    color: (theme) =>
-                      theme.palette.getContrastText(color || "#fff"),
-                  }}
-                />
-              ))}
-            </Stack>
-            <FormGroup sx={{ alignItems: "center" }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="warning"
-                    checked={diwakoStyle}
-                    onChange={() => setDiwakoStyle(!diwakoStyle)}
-                    inputProps={{ "aria-label": "controlled" }}
-                  />
-                }
-                label="Set Digitalwarenkombinat style"
-              />
-            </FormGroup>
-            <div className="container" ref={svgContainerRef} />
-            <Button onClick={downloadSVG} sx={{ mt: 2 }} variant="outlined">
-              Download SVG
-            </Button>
-            <Button onClick={downloadPNG} sx={{ mt: 1 }} variant="outlined">
-              Download PNG
-            </Button>
-          </Container>
-        </>
-      ) : (
-        <img
-          src="./about.svg"
-          alt={"Logo Digitalwarenkombinat"}
-          style={{
-            width: "100vw",
-            height: "auto",
-            maxHeight: "800px",
+            Create beautiful generative SVG grids with customizable designs—start designing and download your artwork in SVG or PNG with a single click!
+          </Typography>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            color: "#fff",
+            backgroundColor: "#dd8d0e",
+            mb: 2,
+            width: { xs: "100%", sm: "auto" },
           }}
-        />
-      )}
+          onClick={generateNewGrid}
+        >
+          Generate Your Own Grid Art
+        </Button>
+
+        {init ? (
+          <>
+            <Stack
+              direction="column"
+              spacing={2}
+              sx={{
+                justifyContent: "center",
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              <Stack direction="row" spacing={1} sx={{ justifyContent: "center" }}>
+                {colors.map((color, index) => (
+                  <Chip
+                    key={index}
+                    label={color}
+                    sx={{
+                      backgroundColor: color,
+                      color: (theme) =>
+                        theme.palette.getContrastText(color || "#fff"),
+                    }}
+                  />
+                ))}
+              </Stack>
+              <FormGroup sx={{ alignItems: "center" }}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color="warning"
+                      checked={diwakoStyle}
+                      onChange={() => setDiwakoStyle(!diwakoStyle)}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  }
+                  label="Set Digitalwarenkombinat Style"
+                />
+              </FormGroup>
+              <div className="container" ref={svgContainerRef} />
+              <Button onClick={downloadSVG} sx={{ mt: 2 }} variant="outlined">
+                Download SVG
+              </Button>
+              <Button onClick={downloadPNG} sx={{ mt: 1 }} variant="outlined">
+                Download PNG
+              </Button>
+            </Stack>
+          </>
+        ) : (
+          <img
+            src="./about.svg"
+            alt={"Logo Digitalwarenkombinat"}
+            style={{
+              width: "100%",
+              height: "auto",
+              maxHeight: "800px",
+            }}
+          />
+        )}
+      </Container>
     </div>
   );
 };

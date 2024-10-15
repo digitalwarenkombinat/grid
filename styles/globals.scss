@@ -1,9 +1,3 @@
-:root {
-  --bg-inner: white;
-  --bg-outer: white;
-  --bg-button: #1fb264;
-}
-
 @font-face {
   font-family: "Fundamental Brigade";
   fontdisplay: "swap";
@@ -15,31 +9,13 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Fundamental Brigade";
-  background-color: #eee;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.wrapper {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  place-items: center;
-  gap: 1rem;
-}
-
-.container {
-  height: 70vh;
-  background-image: radial-gradient(var(--bg-inner) 0%, var(--bg-outer) 100%);
-
-  svg {
-    width: 100%;
-    aspect-ratio: 1;
-  }
-
-  svg * {
-    // shape-rendering: crispEdges;
-    shape-rendering: geometricprecision;
-  }
+svg * {
+  // shape-rendering: crispEdges;
+  shape-rendering: geometricprecision;
 }
