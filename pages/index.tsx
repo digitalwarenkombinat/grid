@@ -257,8 +257,7 @@ const Home: NextPage = () => {
       </AppBar>
       <Container
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" }, 
+          display: "grid",
           alignItems: "center",
           justifyContent: "center",
           py: 4,
