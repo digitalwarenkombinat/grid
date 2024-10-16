@@ -16,7 +16,7 @@ import tinycolor from "tinycolor2";
 import Toolbar from "@mui/material/Toolbar";
 import type { NextPage } from "next";
 import Typography from "@mui/material/Typography";
-import { toPng } from "html-to-image";
+import { Canvg } from 'canvg';
 
 import {
   drawCross,
@@ -208,18 +208,31 @@ const Home: NextPage = () => {
   // Download PNG
   const downloadPNG = () => {
     if (!svgContainerRef.current) return;
+    const svgElement = svgContainerRef.current.querySelector("svg");
+    if (!svgElement) return;
 
-    toPng(svgContainerRef.current)
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "grid-art.png";
-        link.click();
-      })
-      .catch((err) => {
-        console.error("Error downloading PNG", err);
-      });
-  };
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    canvas.width = svgElement.width.baseVal.value;
+    canvas.height = svgElement.height.baseVal.value;
+  
+    // Get context and use Canvg to draw the SVG into the canvas
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const canvgInstance = Canvg.fromString(ctx, svgData);
+  
+      canvgInstance.start()
+        // Now you can use the canvas as PNG
+        const pngData = canvas.toDataURL('image/png');
+        
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngData;
+        downloadLink.download = 'grid-art.png';
+        downloadLink.click();
+    }
+  }
 
   return (
     <>

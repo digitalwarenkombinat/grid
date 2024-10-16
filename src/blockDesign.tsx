@@ -179,8 +179,7 @@ export function drawLetterBlock(x: number, y: number, foreground: string, backgr
   group.rect(squareSize, squareSize).fill(background).move(x, y);
 
   // Draw Foreground
-  const character = diwakoStyle ? random(["D", "I", "W", "A", "K", "O"]): random(selectedCharacters);
-  //const character = selectedCharacters.splice(Math.floor(Math.random()), 1);
+  const character = random(selectedCharacters);
   const text = group.plain(character);
   text.font({
     family: "Source Code Pro",
