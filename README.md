@@ -1,50 +1,53 @@
-# Grid
+<p align="center">
+  <a href="https://digitalwarenkombinat.github.io/grid/">
+    <img alt="Logo of 'Grid Art Designer'" src="public/about.svg">
+  </a>
+</p>
 
+---
 
+## About [_Grid Art Designer_](https://digitalwarenkombinat.github.io/grid/)
 
-
-# Grid Art Designer
-
-## Overview
 Grid Art Designer allows users to create and download grid-based SVG artwork, with options to toggle filters and download the final image as an SVG or PNG.
 
 Inspired from Alex Trosts article [Creating Generative SVG Grids](https://frontend.horse/articles/generative-grids/).
 
-## Installation
+## Feedback
 
-1. Clone the repository:
+Feel free to send us feedback on [Instagram](https://www.instagram.com/digitalwarenkombinat/) or [file an issue](https://github.com/digitalwarenkombinat/glamorouseurope/issues/new). Feature requests are always welcome.
 
-```
-  git clone https://github.com/your-repo/grid-art-designer.git
-  cd grid-art-designer
-```
+## Getting started
 
-2. Install dependencies:
+Run the following command on your local environment:
 
 ```
-  npm install
+git clone --depth=1 https://github.com/digitalwarenkombinat/grid.git
+cd grid
+npm install
 ```
 
-3. Run the development server:
+You can run the application in development mode with live reload:
 
 ```
-  npm run dev
+npm run dev
 ```
 
-4. Open http://localhost:3000 to view the app.
+Open http://localhost:3000 with your favorite browser to see the application.
 
-## Usage
+```
+.
+├── README.md            # README file
+├── next.config.js       # Next configuration
+├── public               # Public folder for assets and fonts
+├── src                  # UI components
+└── tsconfig.json        # TypeScript configuration
+```
 
-- Use the filters to apply different block styles.
-- Download your artwork by clicking "Download SVG" or "Download PNG".
+You can see the results locally in production mode with:
 
-## Dependencies
+```
+npm run build
+npm run start
+```
 
-- Next.js: React framework for server-side rendering.
-- React: JavaScript library for building user interfaces.
-- Tailwind CSS: Utility-first CSS framework.
-- html-to-image: Library for converting HTML nodes to images.
-
-## License
-
-This project is licensed under the MIT License.
+The generated HTML and CSS files are minified (built-in feature from Next).
