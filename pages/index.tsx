@@ -114,7 +114,7 @@ function getTwoColors(colors: string[]): { foreground: string; background: strin
 const Home: NextPage = () => {
   const [colors, setColors] = useState<string[]>([]);
   const [diwakoStyle, setDiwakoStyle] = useState<boolean>(false);
-  const [init, setInit] = useState<boolean>(false);
+  const [init, setInit] = useState<boolean>(true);
 
   const svgContainerRef = useRef<HTMLDivElement>(null);
 
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
   */
 
   function generateNewGrid() {
-    setInit(true);
+    setInit(false);
     gsap.to(".container > svg", {
       opacity: 0,
       scale: 0.8,
@@ -222,11 +222,13 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>Grid Art Designer</title>
         <meta name="description" content="Create stunning generative SVG grids with customizable designs and color palettes. Download your creations in SVG and PNG formats. Perfect for digital art, prints, and web design. Start creating with just one click!"></meta>
-        <link rel="icon" href="./favicon.ico" />
+        <link rel="icon" href="./favicon.ico" sizes="any"/>
+        <link rel="icon" href="./about.svg" type="image/svg+xml"/>
+        <link rel="apple-touch-icon" href="./apple-touch-icon-180x180.png"/>
         <link rel="manifest" href="./manifest.json" />
       </Head>
       <AppBar position="static" sx={{ backgroundColor: "#dd8d0e" }}>
@@ -260,17 +262,19 @@ const Home: NextPage = () => {
           display: "grid",
           alignItems: "center",
           justifyContent: "center",
-          py: 4,
-          gap: 2
+          py: 2,
+          gap: { xs: init ? 2 : 0, md: 4 },
         }}
       >
-        <Typography
-            variant="h5"
-            component="h1"
-            sx={{ flexGrow: 1, textAlign: 'center', fontSize: { xs: "1.5rem", md: "2rem" } }}
-          >
+        {init && (
+          <Typography
+              variant="h6"
+              component="h1"
+              sx={{ flexGrow: 1, textAlign: 'center', fontSize: { xs: "1.5rem", md: "2rem" }, fontFamily: "Fundamental Brigade" }}
+            >
             Create beautiful generative SVG grids with customizable designs—start designing and download your artwork in SVG or PNG with a single click!
           </Typography>
+        )}
         <Button
           variant="contained"
           size="large"
@@ -285,18 +289,28 @@ const Home: NextPage = () => {
           Generate Your Own Grid Art
         </Button>
 
-        {init ? (
+        {init ? (      
+          <img
+            src="./about.svg"
+            alt={"Logo Digitalwarenkombinat"}
+            style={{
+              width: "100%",
+              height: "auto",
+              maxHeight: "400px",
+            }}
+          />
+        ) : (
           <>
             <Stack
               direction="column"
               spacing={2}
               sx={{
                 justifyContent: "center",
-                width: "100%",
+                width: { xs: '100%', md: '50vw', lg: '33vw' },
                 alignItems: "center",
               }}
             >
-              <Stack direction="row" spacing={1} sx={{ justifyContent: "center" }}>
+              <Stack direction="row" gap={1} sx={{ justifyContent: "center", flexWrap: "wrap" }}>
                 {colors.map((color, index) => (
                   <Chip
                     key={index}
@@ -323,27 +337,25 @@ const Home: NextPage = () => {
                 />
               </FormGroup>
               <div className="container" ref={svgContainerRef} />
-              <Button onClick={downloadSVG} sx={{ mt: 2 }} variant="outlined">
+              <Container
+              sx={{
+                display: "grid",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1
+              }}>
+              <Button onClick={downloadSVG} variant="outlined">
                 Download SVG
               </Button>
-              <Button onClick={downloadPNG} sx={{ mt: 1 }} variant="outlined">
+              <Button onClick={downloadPNG} variant="outlined">
                 Download PNG
               </Button>
+              </Container>
             </Stack>
           </>
-        ) : (
-          <img
-            src="./about.svg"
-            alt={"Logo Digitalwarenkombinat"}
-            style={{
-              width: "100%",
-              height: "auto",
-              maxHeight: "800px",
-            }}
-          />
         )}
       </Container>
-    </div>
+    </>
   );
 };
 
